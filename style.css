@@ -67,4 +67,32 @@ input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-rad
 
 .category-menu:active {
     cursor: grabbing; /* Shows a closed hand when clicking */
+
+}
+
+/* 2. Page & Background - FIXED FOR IPHONE */
+html, body { 
+    overflow-x: hidden; 
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #f0f2f5; 
+}
+
+body { 
+    /* Remove display: flex from here to stop the "snapping" */
+    display: block; 
+}
+
+/* 3. Main Container - FIXED CENTER CALCULATION */
+.form-container { 
+    background: white; 
+    width: 95%; /* Use percentage for mobile safety */
+    max-width: 480px; 
+    margin: 20px auto; /* This centers it perfectly without the iPhone "jump" */
+    padding: 15px; 
+    border-radius: 20px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    position: relative;
 }
