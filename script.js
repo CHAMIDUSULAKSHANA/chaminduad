@@ -57,3 +57,62 @@ function sendOrder() {
 
     window.open(`https://wa.me/94751302483?text=${encodeURIComponent(msg)}`, '_blank');
 }
+
+
+const sliders = document.querySelectorAll('.product-grid');
+
+sliders.forEach(slider => {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        slider.style.cursor = 'grabbing';
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2; // Adjust number to change scroll speed
+        slider.scrollLeft = scrollLeft - walk;
+    });
+});
+
+function showPage(pageId, event) {
+    // 1. Hide all categories and remove active class from buttons
+    const pages = document.querySelectorAll('.cat-page');
+    const buttons = document.querySelectorAll('.category-menu button');
+    
+    pages.forEach(page => {
+        page.classList.remove('active');
+        
+        // --- ADD THIS LINE BELOW ---
+        // This resets the horizontal scroll to the start for EVERY category
+        const grid = page.querySelector('.product-grid');
+        if (grid) grid.scrollLeft = 0; 
+    });
+
+    buttons.forEach(btn => btn.classList.remove('active'));
+
+    // 2. Show the selected category and set button to active
+    document.getElementById(pageId).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+if (grid) {
+    grid.scrollTo({ left: 0, behavior: 'smooth' });
+}
