@@ -2,21 +2,51 @@
 html, body { overflow-x: hidden; width: 100%; position: relative; }
 body { background: #f0f2f5; display: flex; justify-content: center; padding: 10px; }
 
-
-/* 3. Main Container - FIXED CENTER CALCULATION */
 .form-container { 
-    background: white; 
-    width: 95%; /* Use percentage for mobile safety */
-    max-width: 480px; 
-    margin: 20px auto; /* This centers it perfectly without the iPhone "jump" */
-    padding: 15px; 
-    border-radius: 20px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    position: relative;
+    background: white; width: 100%; max-width: 480px; padding: 15px; 
+    border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden;
+}
+
+.header h1 { color: #075e54; text-align: center; margin-bottom: 40px;
+     text-align: right;
+     margin-top: 0.67em;
+     margin-right: 0px;
+     margin-bottom: 21px;
+     margin: 0;
+     margin-top: 15px;
+     
+}
+
+.header{
+
+    justify-content: right;
+    margin-left: 70px;
+    margin-top: 8px;
+    
 }
 
 
-.header h1 { color: #075e54; text-align: center; margin-bottom: 10px; }
+.logo {
+    width: 100%;             /* Ensure container spans the full width */
+    display: flex;           /* Enable flexbox for alignment */
+    justify-content: left; /* Center the logo horizontally */
+    align-items: left;     /* Center the logo vertically (optional) */
+   
+    margin-bottom: 0px;
+    margin-top: 0px;     /* Adjust spacing from the content below */
+    margin-left: 12px;
+}
+.logo img{
+    height: 90px;
+    width: 90px;
+    border-radius:50% ;
+    border: 1px solid #ddd;
+    margin-top: 0px;
+    margin-bottom: 20px;
+
+
+}
+
 
 /* FIXED CATEGORY MENU WITH HOVER SCROLL LINE */
 .category-menu { 
@@ -76,21 +106,74 @@ input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-rad
 
 .category-menu:active {
     cursor: grabbing; /* Shows a closed hand when clicking */
-
 }
 
-/* 2. Page & Background - FIXED FOR IPHONE */
-html, body { 
-    overflow-x: hidden; 
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
-    background: #f0f2f5; 
+/* This makes the products sit in one row and allows swiping */
+.product-grid {
+    display: flex;
+    overflow-x: auto;         /* Enables the horizontal scroll/swipe */
+    scroll-snap-type: x mandatory; /* Makes the swipe "snap" to each card */
+    gap: 15px;
+    padding: 10px 5px;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
 }
 
-body { 
-    /* Remove display: flex from here to stop the "snapping" */
-    display: block; 
+/* Ensure cards don't shrink and stay a consistent size */
+.product-card {
+    flex: 0 0 250px;          /* Prevents shrinking, sets card width to 250px */
+    scroll-snap-align: start; /* Alignment for the snapping effect */
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
+/* Optional: Hide the scrollbar for a cleaner "app-like" look */
+.product-grid::-webkit-scrollbar {
+    display: none;
+}
+
+
+.product-grid {
+    cursor: grab; /* Shows the "hand" icon to indicate it's draggable */
+    user-select: none; /* Prevents text highlighting while dragging */
+    -webkit-user-select: none;
+}
+
+.product-grid:active {
+    cursor: grabbing; /* Shows a "closed hand" when clicking/dragging */
+}
+
+/* 1. Show the horizontal scrollbar for the product grid */
+.product-grid {
+    overflow-x: auto; /* Ensures the scrollbar appears when needed */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #008080 #f0f0f0; /* Thumb color and track color for Firefox */
+    padding-bottom: 15px; /* Adds space so the line doesn't touch the products */
+}
+
+/* 2. Custom styling for Chrome, Edge, and Safari (the "line") */
+.product-grid::-webkit-scrollbar {
+    height: 8px; /* This sets the thickness of the horizontal line */
+    display: block; /* Make sure it is visible */
+}
+
+/* The background "track" of the line */
+.product-grid::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+}
+
+/* The draggable "thumb" (the actual line you move) */
+.product-grid::-webkit-scrollbar-thumb {
+    background: #008080; /* Match this to your theme color */
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Change color when you hover over the line */
+.product-grid::-webkit-scrollbar-thumb:hover {
+    background: #005a5a; 
+}
+
 
