@@ -13,23 +13,87 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="top">
+  <nav>
+  <ul>
+    <!-- Left Side: Logo and Name -->
+    <li class="logo-item">
+      <a href="#">
+        <img src="logo.png" alt="Logo" class="nav-logo">
+        <span>Sakura Bloom</span>
+      </a>
+    </li>
+
+    <!-- Right Side: Just the Cart Button -->
+    <li class="cart-btn-container">
+      <button class="cart-btn" onclick="toggleCart()">🛒 Cart</button>
+
+    </li>
+
+   
+  </ul>
+</nav>
+
+
+  <script>
+    function showSidebar(){
+      const sidebar = document.querySelector('.sidebar')
+      sidebar.style.display = 'flex'
+    }
+    function hideSidebar(){
+      const sidebar = document.querySelector('.sidebar')
+      sidebar.style.display = 'none'
+    }
+
+    /* Add this new function to toggle your form */
+    function toggleCart() {
+      const form = document.querySelector('.form-container'); // Ensure this class matches your form's div
+      if (form.style.display === 'block') {
+        form.style.display = 'none';
+      } else {
+        form.style.display = 'block';
+        hideSidebar(); // Automatically close sidebar when cart opens on mobile
+      }
+    }
+  </script>
+</header>
+
+
+
+
+
+
+
+
     
-    <div class="form-container">
-        <div class="logo">
-        <img src="logo.png" alt="alternatetext">
 
 
         
-        <header class="header">
-            <h1>SAKURA DECOR</h1>
+      
+
+            
 
             <header class="header">
-    </div>
-
-       
-    
-
-    
             
             <!-- Category Menu with Hover Scroll -->
             <nav class="category-menu">
@@ -143,21 +207,81 @@
         </div>
 
         <!-- ORDER FORM -->
+
+        
+         <div id="cartOverlay" class="cart-overlay">
+
+
+
+
+
         <div class="order-form-section">
+
+
+
+
+<span class="close-form" onclick="toggleCart()">&times;</span>
+
+
+
+
+            
             <h2 class="form-title">Order Information Form</h2>
             <div id="cartDisplay" class="cart-box">Your cart is empty</div>
             <div class="total-bar">Total: LKR <span id="totalPrice">0</span></div>
 
+            
+
+
             <form id="customerInfo">
-                <input type="text" id="name" placeholder="Customer Name" required>
-                 <textarea id="address" placeholder="Full Delivery Address" required></textarea>
-                <input type="text" id="city" placeholder="City" required>
-                <input type="tel" id="phone" placeholder="Phone Number 1" required>
-                <input type="tel" id="phone" placeholder="Phone Number 2  (optional)" required>
-                <button type="button" class="submit-btn" onclick="sendOrder()">Submit on WhatsApp</button>
-            </form>
-        </div>
-    </div>
+
+  <div class="field">
+    <label for="name">Customer Name</label>
+    <input type="text" id="name" required>
+  </div>
+
+  <div class="field">
+    <label for="address">Full Delivery Address</label>
+    <textarea id="address" required></textarea>
+  </div>
+
+  <div class="field">
+    <label for="city">City</label>
+    <input type="text" id="city" required>
+  </div>
+
+  <div class="field">
+    <label for="phone1">Phone Number 1</label>
+    <input type="tel" id="phone1" required>
+  </div>
+
+  <div class="field">
+    <label for="phone2">Phone Number 2 (optional)</label>
+    <input type="tel" id="phone2">
+  </div>
+
+  <button type="button" class="submit-btn" onclick="sendOrder()">
+    Submit on WhatsApp
+  </button>
+
+</form>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script src="script.js"></script>
 </body>
 </html>
