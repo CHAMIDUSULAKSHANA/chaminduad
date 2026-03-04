@@ -41,23 +41,34 @@ function updateUI() {
     document.getElementById('totalPrice').innerText = total;
 }
 
-function remove(i) { cart.splice(i, 1); updateUI(); }
+function remove(i) {
+    cart.splice(i, 1);
+    updateUI();
+}
 
 function sendOrder() {
     const n = document.getElementById('name').value;
     const c = document.getElementById('city').value;
     const a = document.getElementById('address').value;
-    const p = document.getElementById('phone').value;
 
-    if (!n || !p || cart.length === 0) return alert("Fill Name, Phone and add items!");
+    const p1 = document.getElementById('phone1').value;
+    const p2 = document.getElementById('phone2').value;
 
-    let msg = `*NEW ORDER - AD MOBILES*\n\n👤 *Customer:* ${n}\n📞 *Phone:* ${p}\n🏙️ *City:* ${c}\n📍 *Address:* ${a}\n\n*--- ITEMS ---*\n`;
-    cart.forEach(it => msg += `• ${it.qty}x ${it.name} (${it.color}) - LKR ${it.total}\n`);
+    if (!n || !p1 || cart.length === 0)
+        return alert("Fill Name, Phone and add items!");
+
+    const phoneText = p2 ? `${p1} / ${p2}` : p1;
+
+    let msg = `*NEW ORDER - AD MOBILES*\n\n👤 *Customer:* ${n}\n📞 *Phone:* ${phoneText}\n🏙️ *City:* ${c}\n📍 *Address:* ${a}\n\n*--- ITEMS ---*\n`;
+
+    cart.forEach(it =>
+        msg += `• ${it.qty}x ${it.name} (${it.color}) - LKR ${it.total}\n`
+    );
+
     msg += `\n💰 *Total: LKR ${document.getElementById('totalPrice').innerText}*`;
 
     window.open(`https://wa.me/94751302483?text=${encodeURIComponent(msg)}`, '_blank');
 }
-
 
 const sliders = document.querySelectorAll('.product-grid');
 
@@ -116,3 +127,23 @@ function showPage(pageId, event) {
 if (grid) {
     grid.scrollTo({ left: 0, behavior: 'smooth' });
 }
+
+
+
+
+
+
+
+function toggleCart() {
+    const overlay = document.getElementById('cartOverlay');
+    
+    // This toggles the 'active' class defined in CSS step 2
+    if (overlay.classList.contains('active')) {
+        overlay.classList.remove('active');
+        overlay.style.display = 'none'; // Fallback safety
+    } else {
+        overlay.classList.add('active');
+        overlay.style.display = 'flex'; // Force flex to center items
+    }
+}
+
