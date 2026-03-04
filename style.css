@@ -272,11 +272,37 @@ nav ul {
 .product-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; }
 .add-btn { width: 100%; background: #075e54; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold; margin-top: 5px; }
 
-.order-form-section { background: #f9f9f9; padding: 15px; border-radius: 15px; margin-top: 20px; border-top: 4px solid #25d366;
-margin-bottom: 100px;
-display: flex;
-align-content: center;
-margin-top: 500px; }
+
+
+
+.order-form-section {
+    background: white;
+    width: 100%;             /* Use 100% of the small parent width */
+    max-width: 400px;
+    max-height: 90vh;        /* Keeps it within the screen height */
+    overflow-y: auto;        /* ENABLES THE SCROLL */
+    padding: 25px;
+    padding-bottom: 50px;    /* EXTRA SPACE at the bottom for the button */
+    border-radius: 15px;
+    position: relative;      /* Keeps the close button relative to this box */
+    
+    /* REMOVE THESE IF THEY ARE THERE: */
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+}
+
+
+
+
+
+
+
+
+
+
+
+
 .form-title { text-align: center; font-size: 18px; margin-bottom: 15px; font-weight: bold; }
 .cart-box { background: white; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px; border: 1px solid #eee; min-height: 45px; }
 .total-bar { text-align: right; font-weight: bold; margin-bottom: 10px; color: #075e54; }
