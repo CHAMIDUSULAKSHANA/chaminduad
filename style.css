@@ -101,7 +101,7 @@ input, textarea {
     width: 90%;
     max-width: 400px; /* Prevents it from getting too wide */
     max-height: 90vh; /* Prevents it from going off-screen on small phones */
-    overflow-y: auto; /* Allows scrolling inside the form if needed */
+    overflow-y: scroll; /* Allows scrolling inside the form if needed */
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
