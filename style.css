@@ -21,7 +21,6 @@ body{
   z-index: 2000; /* Higher than your sidebar and nav */
   background: white;
   padding: 20px;
-    padding-bottom: 100px;
   border-radius: 12px;
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
   width: 90%;
@@ -102,8 +101,8 @@ input, textarea {
     background: white;
     width: 90%;
     max-width: 400px;
-    max-height: 85vh;    /* Slightly reduced to ensure it fits mobile screens better */
-    overflow-y:scroll;    /* This is key: it allows the form content to scroll */
+    max-height: 225vh;    /* Slightly reduced to ensure it fits mobile screens better */
+    overflow-y: auto;    /* This is key: it allows the form content to scroll */
     padding: 20px;
     padding-bottom: 100px; /* ADD THIS: Creates the extra space at the bottom */
     border-radius: 15px;
