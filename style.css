@@ -1,51 +1,244 @@
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-html, body { overflow-x: hidden; width: 100%; position: relative; }
-body { background: #f0f2f5; display: flex; justify-content: center; padding: 10px; }
-
-.form-container { 
-    background: white; width: 100%; max-width: 480px; padding: 15px; 
-    border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden;
-}
-
-.header h1 { color: #075e54; text-align: center; margin-bottom: 40px;
-     text-align: right;
-     margin-top: 0.67em;
-     margin-right: 0px;
-     margin-bottom: 21px;
-     margin: 0;
-     margin-top: 15px;
-     
-}
-
-.header{
-
-    justify-content: right;
-    margin-left: 70px;
-    margin-top: 8px;
-    
-}
-
-
-.logo {
-    width: 100%;             /* Ensure container spans the full width */
-    display: flex;           /* Enable flexbox for alignment */
-    justify-content: left; /* Center the logo horizontally */
-    align-items: left;     /* Center the logo vertically (optional) */
-   
-    margin-bottom: 0px;
-    margin-top: 0px;     /* Adjust spacing from the content below */
-    margin-left: 12px;
-}
-.logo img{
-    height: 90px;
-    width: 90px;
-    border-radius:50% ;
-    border: 1px solid #ddd;
-    margin-top: 0px;
-    margin-bottom: 20px;
-
+*{
+    margin: 0;
+    padding: 0;
 
 }
+
+body{
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-container {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stays in place when scrolling */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Perfectly centers the form */
+  z-index: 2000; /* Higher than your sidebar and nav */
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 500px;
+}
+
+
+
+/* Makes sure the button stays inside this container */
+.order-form-section {
+    position: relative; 
+}
+
+.close-form {
+    position: left;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #888;
+    line-height: 1;
+}
+
+.close-form:hover {
+    color: #333;
+}
+
+
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+input, textarea {
+  padding: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 1. The Background Overlay (Dark dimmer) */
+.cart-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    z-index: 9999; /* Sits on top of everything */
+    justify-content: center; /* Centers form horizontally */
+    align-items: center; /* Centers form vertically */
+    animation: fadeIn 0.3s ease;
+}
+
+/* 2. The Form Box (Your existing class, tweaked) */
+.order-form-section {
+    background: white;
+    width: 90%;
+    max-width: 400px; /* Prevents it from getting too wide */
+    max-height: 90vh; /* Prevents it from going off-screen on small phones */
+    overflow-y: auto; /* Allows scrolling inside the form if needed */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    position: relative; /* Needed for close button positioning */
+}
+
+/* 3. The Close Button (Red X) */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+
+
+/* Align items: Logo on left, Cart on right */
+nav ul {
+  display: flex;
+  justify-content: space-between; /* This pushes Cart to the far right */
+  align-items: center;
+  list-style: none;
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin: 0;
+  margin-bottom: 0px;
+
+}
+
+/* Logo styling */
+.logo-item a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.nav-logo {
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Modern Cart Button styling */
+.cart-btn {
+  background-color: #28a745; /* Green like your WhatsApp button */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.cart-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05); /* Slight grow effect when hovering */
+}
+
+/* Hide the form initially */
+.form-container {
+  display: none; 
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  z-index: 9999;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  width: 90%;
+  max-width: 500px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.logo-item a {
+  display: flex;
+  align-items: center;
+  gap: 12px;           /* Space between logo and text */
+  padding: 0 15px;     /* Adjust padding so it's not too far from the edge */
+}
+
+/* Make the logo image round */
+.nav-logo {
+  height: 35px;        /* Adjust size to fit your 50px header height */
+  width: 35px;         /* Keep width/height equal for a circle */
+  border-radius: 50%;  /* Makes it round */
+  object-fit: cover;   /* Prevents the image from stretching */
+}
+
+/* Ensure the text doesn't look like a standard link */
+.logo-item span {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* FIXED CATEGORY MENU WITH HOVER SCROLL LINE */
@@ -175,5 +368,13 @@ input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-rad
 .product-grid::-webkit-scrollbar-thumb:hover {
     background: #005a5a; 
 }
+
+
+
+
+
+
+
+
 
 
