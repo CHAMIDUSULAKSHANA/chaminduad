@@ -97,19 +97,11 @@ input, textarea {
 
 
 
-
-
-
-
-
-
-
-
-
 /* 1. The Background Overlay (Dark dimmer) */
 .cart-overlay {
     display: none; /* Hidden by default */
     position: fixed;
+    margin-top:60px;
     top: 0;
     left: 0;
     width: 100%;
@@ -119,9 +111,18 @@ input, textarea {
     justify-content: center; /* Centers form horizontally */
     align-items: center; /* Centers form vertically */
     animation: fadeIn 0.4s ease;
-  overflow-y: scroll;
+  overflow-y: auto;
 
 }
+
+
+
+
+
+
+
+
+
 
 
 
