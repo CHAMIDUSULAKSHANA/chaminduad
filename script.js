@@ -59,7 +59,7 @@ function sendOrder() {
 
     const phoneText = p2 ? `${p1} / ${p2}` : p1;
 
-    let msg = `*NEW ORDER - AD MOBILES*\n\n👤 *Customer:* ${n}\n📞 *Phone:* ${phoneText}\n🏙️ *City:* ${c}\n📍 *Address:* ${a}\n\n*--- ITEMS ---*\n`;
+    let msg = `*NEW ORDER - S A K U R A  DECOR*\n\n👤 *Customer:* ${n}\n📞 *Phone:* ${phoneText}\n🏙️ *City:* ${c}\n📍 *Address:* ${a}\n\n*--- ITEMS ---*\n`;
 
     cart.forEach(it =>
         msg += `• ${it.qty}x ${it.name} (${it.color}) - LKR ${it.total}\n`
@@ -146,4 +146,10 @@ function toggleCart() {
         overlay.style.display = 'flex'; // Force flex to center items
     }
 }
+
+
+
+
+
+
 
