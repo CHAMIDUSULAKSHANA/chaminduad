@@ -12,41 +12,64 @@ body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.form-container {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stays in place when scrolling */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Perfectly centers the form */
-  z-index: 2000; /* Higher than your sidebar and nav */
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-  width: 90%;
-  max-width: 500px;
+
+
+
+
+
+/* Input Styles for better touch targets */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px; /* Prevents iOS auto-zoom on focus */
+}
+
+/* Fixed Submit Button at the bottom (optional) 
+   Or just place it inside .form-content to scroll with the form */
+.submit-btn {
+    background-color: #25D366; /* WhatsApp Green */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
 }
 
 
 
-/* Makes sure the button stays inside this container */
-.order-form-section {
-    position: relative; 
+@media (max-width: 480px) {
+    .order-form-title {
+        font-size: 1.2rem;
+    }
+    .form-container {
+        padding: 10px;
+    }
 }
+
+
+
 
 .close-form {
     position: left;
     top: 15px;
+    padding-bottom: 5px;
+    padding-top: 200px;
     right: 20px;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    color: #888;
+    color: #000000;
     line-height: 1;
 }
 
 .close-form:hover {
-    color: #333;
+    color: #313131;
 }
 
 
@@ -54,17 +77,20 @@ body{
 .field {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+  
+  
 }
 
 label {
   font-size: 14px;
   margin-bottom: 5px;
   font-weight: 600;
+  
 }
 
 input, textarea {
   padding: 8px;
+  
 }
 
 
@@ -88,31 +114,18 @@ input, textarea {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    background-color: rgba(255, 248, 248, 0.6); /* Semi-transparent black */
     z-index: 9999; /* Sits on top of everything */
     justify-content: center; /* Centers form horizontally */
     align-items: center; /* Centers form vertically */
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.4s ease;
+  overflow-y: scroll;
+
 }
 
-/* 2. The Form Box (Your existing class, tweaked) */
-/* 2. The Form Box - UPDATED */
-.order-form-section {
-    background: white;
-    width: 90%;
-    max-width: 400px;
-    max-height: 225vh;    /* Slightly reduced to ensure it fits mobile screens better */
-    overflow-y: auto;    /* This is key: it allows the form content to scroll */
-    padding: 20px;
-    padding-bottom: 500px; /* ADD THIS: Creates the extra space at the bottom */
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    position: center;
-    
-    /* Ensure flex column layout if needed to keep things orderly */
-    display: flex;
-    flex-direction: column;
-}
+
+
+
 
 
 /* 3. The Close Button (Red X) */
@@ -120,14 +133,17 @@ input, textarea {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: #ff4d4d;
-    color: white;
+    background: #ffffff;
+    color: rgba(23, 158, 136, 0.1);
+  margin: 0;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
 }
+
+
 
 
 
@@ -140,7 +156,7 @@ nav ul {
   list-style: none;
   padding: 10px 20px;
   background-color: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(23, 158, 136, 0.1);
   margin: 0;
  
 }
@@ -162,8 +178,8 @@ nav ul {
 
 /* Modern Cart Button styling */
 .cart-btn {
-  background-color: #28a745; /* Green like your WhatsApp button */
-  color: white;
+  background-color: #141414; /* Green like your WhatsApp button */
+  color: rgb(255, 255, 255);
   border: none;
   padding: 10px 20px;
   border-radius: 25px;
@@ -173,25 +189,10 @@ nav ul {
 }
 
 .cart-btn:hover {
-  background-color: #218838;
+  background-color: #25d366;
   transform: scale(1.05); /* Slight grow effect when hovering */
 }
 
-/* Hide the form initially */
-.form-container {
-  display: none; 
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  z-index: 9999;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.3);
-  width: 90%;
-  max-width: 500px;
-}
 
 
 
@@ -267,7 +268,19 @@ nav ul {
 .cat-page { display: none; width: 100%; }
 .cat-page.active { display: block; animation: fadeIn 0.3s; }
 
-.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 10px; }
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 items per row on mobile */
+    gap: 15px;
+    padding: 10px;
+}
+
+@media (min-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 per row on PC */
+    }
+}
+
 .product-card { border: 1px solid #eee; padding: 10px; border-radius: 12px; text-align: center; background: #fff; }
 .product-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; }
 .add-btn { width: 100%; background: #075e54; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold; margin-top: 5px; }
@@ -275,21 +288,21 @@ nav ul {
 
 
 
+
 .order-form-section {
-    background: white;
-    width: 100%;             /* Use 100% of the small parent width */
-    max-width: 400px;
-    max-height: 90vh;        /* Keeps it within the screen height */
-    overflow-y: auto;        /* ENABLES THE SCROLL */
-    padding: 25px;
-    padding-bottom: 50px;    /* EXTRA SPACE at the bottom for the button */
-    border-radius: 15px;
-    position: relative;      /* Keeps the close button relative to this box */
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(235, 235, 235, 0.1); /* Subtle elevation */
+    max-width: 500px;
+    overscroll-behavior-y: auto;
     
-    /* REMOVE THESE IF THEY ARE THERE: */
-    /* top: 50%; */
-    /* left: 50%; */
-    /* transform: translate(-50%, -50%); */
+    width: 400px;
+    margin: 40px auto;
+    border: 1px solid #e1e8ed;
+    
+    
+  
 }
 
 
@@ -303,20 +316,202 @@ nav ul {
 
 
 
-.form-title { text-align: center; font-size: 18px; margin-bottom: 15px; font-weight: bold; }
-.cart-box { background: white; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px; border: 1px solid #eee; min-height: 45px; }
-.total-bar { text-align: right; font-weight: bold; margin-bottom: 10px; color: #075e54; }
 
-input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 14px; outline: none; }
-.submit-btn { width: 100%; background: #25d366; color: white; border: none; padding: 16px; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer;
+
+.cart-box { background: white; padding: 10px;
+     border-radius: 8px;
+      margin: 10px 0; font-size: 13px;
+       border: 1px solid #eee;
+        min-height: 45px;
+        
+     }
+.total-bar { text-align: center; 
+    font-weight: bold;
+     margin-bottom: 10px; 
+     color: #075e54; }
+
+input, textarea { width: 100%; padding: 12px; 
+    border: 1px solid #ddd; 
+    border-radius: 15px;
+    align-items: center;
+    border-radius: 8px;
+    margin-right: 10px;
+    margin-left: 0;
+    width: auto;
+    
+     margin-bottom: 10px; 
+     font-size: 14px;
+     align-items: center;
+
+      outline: none;
+      outline-offset: 0; 
+    }
+.submit-btn {  position: sticky;
+    width: 100%;
+    background-color: #25d366;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+   
  }
+ .submit-btn:hover {
+    background-color: #565c58; /* Slightly darker on hover */
+    transform: translateY(-1px); /* Subtle lift */
+}
 
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; justify-content: center; align-items: center; padding: 20px; }
-.modal-content { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 320px; text-align: center; }
-.modal-content select, .modal-content input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; }
-.modal-btns { display: flex; gap: 10px; }
-.confirm-btn { flex: 1; background: #25d366; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-.cancel-btn { flex: 1; background: #eee; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+/* Animation Keyframes */
+@keyframes modalPop {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal { 
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.6); 
+    z-index: 9999; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out; /* Smooth background fade */
+}
+
+.modal-content { 
+    background: #ffffff; 
+    padding: 30px; 
+    border-radius: 24px; 
+    width: 100%; 
+    max-width: 340px; 
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy pop animation */
+}
+
+/* Fix for text filling boxes and outlines */
+.modal-content select, 
+.modal-content input { 
+    width: 100%; 
+    padding: 14px; 
+    margin: 12px 0; 
+    border-radius: 12px; 
+    border: 1.5px solid #eee; 
+    font-size: 16px;
+    outline: none; /* Removes the default blue/black outline */
+    transition: all 0.2s ease;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+/* Cleaner focus state when user clicks the box */
+.modal-content select:focus, 
+.modal-content input:focus {
+    border-color: #25d366; 
+    background-color: #f9f9f9;
+}
+
+.modal-btns { 
+    display: flex; 
+    gap: 12px; 
+    margin-top: 10px;
+}
+
+.confirm-btn { 
+    flex: 1; 
+    background: #25d366; 
+    color: white; 
+    border: none; 
+    padding: 14px; 
+    border-radius: 12px; 
+    cursor: pointer; 
+    font-weight: 600;
+    transition: transform 0.1s active;
+}
+
+.cancel-btn { 
+    flex: 1; 
+    background: #f2f2f2; 
+    color: #555;
+    border: none; 
+    padding: 14px; 
+    border-radius: 12px; 
+    cursor: pointer; 
+    font-weight: 600; 
+}
+
+/* Button click effect */
+.confirm-btn:active, .cancel-btn:active {
+    transform: scale(0.96);
+}
+
+.modal-content select:focus, 
+.modal-content input:focus {
+    outline: none; /* This removes the blue box */
+    border-color: #25d366; /* Changes border to your brand green instead */
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1); /* Adds a soft green glow */
+
+
+}
+
+
+
+
+
+#productPopup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.popup-box{
+background:white;
+width:320px;
+padding:20px;
+border-radius:10px;
+text-align:center;
+}
+
+.popup-box img{
+width:100%;
+border-radius:8px;
+}
+
+.popup-thumbs{
+display:flex;
+gap:10px;
+justify-content:center;
+margin-top:10px;
+}
+
+.popup-thumbs img{
+width:60px;
+cursor:pointer;
+}
+
+.popup-close{
+cursor:pointer;
+font-size:20px;
+float:right;
+}
+
 
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -331,7 +526,8 @@ input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-rad
     cursor: grab; /* Shows a hand icon */
     user-select: none; /* Prevents text highlighting while dragging */
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    scrollbar-width: 1000px;
+    
 }
 
 .category-menu:active {
@@ -374,13 +570,58 @@ input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-rad
     cursor: grabbing; /* Shows a "closed hand" when clicking/dragging */
 }
 
-/* 1. Show the horizontal scrollbar for the product grid */
 .product-grid {
-    overflow-x: auto; /* Ensures the scrollbar appears when needed */
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: #008080 #f0f0f0; /* Thumb color and track color for Firefox */
-    padding-bottom: 15px; /* Adds space so the line doesn't touch the products */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Exactly 2 columns */
+    gap: 12px;
+    padding: 12px;
+    align-items: stretch; /* Forces all cards in a row to be same height */
 }
+
+.product-card {
+    background: #fff;
+    border-radius: 15px;
+    border: 1.5px solid #f0f0f0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease;
+}
+
+/* Force images to be identical squares */
+.product-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* This is the secret for identical sizes */
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.product-card h4 {
+    font-size: 14px;
+    margin: 5px 0;
+    height: 34px; /* Fixes height for 2 lines of text */
+    overflow: hidden;
+    line-height: 1.2;
+}
+
+.product-card p {
+    font-weight: bold;
+    color: #25d366;
+    margin: 5px 0 10px 0;
+}
+
+.add-btn {
+    margin-top: auto; /* Pushes button to the very bottom of the card */
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+
 
 /* 2. Custom styling for Chrome, Edge, and Safari (the "line") */
 .product-grid::-webkit-scrollbar {
