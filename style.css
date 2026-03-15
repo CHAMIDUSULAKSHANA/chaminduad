@@ -296,9 +296,10 @@ nav ul {
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(235, 235, 235, 0.1); /* Subtle elevation */
     max-width: 500px;
-    overscroll-behavior-y: auto;
+    overscroll-behavior-y: scroll;
     
-    width: 400px;
+    width: 100%;
+    margin-top: 666px;
     margin: 40px auto;
     border: 1px solid #e1e8ed;
     
