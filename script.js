@@ -1,155 +1,718 @@
+// E-Commerce JavaScript Functionality
+let products = [];
 let cart = [];
-let currentItem = {};
-const PHONE_NUMBER = "94751302483"; 
+let currentProduct = null;
+let selectedColor = '';
+let selectedQuantity = 1;
+let currentImageIndex = 0;
+let touchStartX = 0;
+let touchEndX = 0;
 
-const productColors = { h: ['Black', 'White', 'Blue'], p: ['Black', 'White'], a: ['White'], g: ['Clear'] };
+// Sample product data with multiple images
+const sampleProducts = [
+    {
+        id: 1,
+        name: "Wireless Headphones Pro",
+        price: 8999,
+        category: "headphones",
+        images: [
+            "https://picsum.photos/seed/headphones1/400/400",
+            "https://picsum.photos/seed/headphones1-2/400/400",
+            "https://picsum.photos/seed/headphones1-3/400/400",
+            "https://picsum.photos/seed/headphones1-4/400/400"
+        ],
+        colors: ["Black", "White", "Blue"],
+        description: "Premium wireless headphones with noise cancellation"
+    },
+    {
+        id: 2,
+        name: "Power Bank 10000mAh",
+        price: 2499,
+        category: "powerbanks",
+        images: [
+            "https://picsum.photos/seed/powerbank1/400/400",
+            "https://picsum.photos/seed/powerbank1-2/400/400",
+            "https://picsum.photos/seed/powerbank1-3/400/400"
+        ],
+        colors: ["Black", "White", "Red"],
+        description: "High-capacity portable power bank"
+    },
+    {
+        id: 3,
+        name: "Fast Charger 65W",
+        price: 3299,
+        category: "chargers",
+        images: [
+            "https://picsum.photos/seed/charger1/400/400",
+            "https://picsum.photos/seed/charger1-2/400/400",
+            "https://picsum.photos/seed/charger1-3/400/400"
+        ],
+        colors: ["Black", "White"],
+        description: "USB-C fast charger with multiple ports"
+    },
+    {
+        id: 4,
+        name: "Smart Watch Ultra",
+        price: 15999,
+        category: "smartwatches",
+        images: [
+            "https://picsum.photos/seed/watch1/400/400",
+            "https://picsum.photos/seed/watch1-2/400/400",
+            "https://picsum.photos/seed/watch1-3/400/400",
+            "https://picsum.photos/seed/watch1-4/400/400",
+            "https://picsum.photos/seed/watch1-5/400/400"
+        ],
+        colors: ["Black", "Silver", "Rose Gold"],
+        description: "Advanced fitness and health tracking smartwatch"
+    },
+    {
+        id: 5,
+        name: "Bluetooth Speaker Mini",
+        price: 4999,
+        category: "speakers",
+        images: [
+            "https://picsum.photos/seed/speaker1/400/400",
+            "https://picsum.photos/seed/speaker1-2/400/400",
+            "https://picsum.photos/seed/speaker1-3/400/400"
+        ],
+        colors: ["Black", "Blue", "Red", "Green"],
+        description: "Portable waterproof bluetooth speaker"
+    },
+    {
+        id: 6,
+        name: "USB-C Cable 2m",
+        price: 799,
+        category: "cables",
+        images: [
+            "https://picsum.photos/seed/cable1/400/400",
+            "https://picsum.photos/seed/cable1-2/400/400"
+        ],
+        colors: ["Black", "White", "Red"],
+        description: "Durable fast-charging USB-C cable"
+    },
+    {
+        id: 7,
+        name: "Phone Case Premium",
+        price: 1299,
+        category: "cases",
+        images: [
+            "https://picsum.photos/seed/case1/400/400",
+            "https://picsum.photos/seed/case1-2/400/400",
+            "https://picsum.photos/seed/case1-3/400/400",
+            "https://picsum.photos/seed/case1-4/400/400"
+        ],
+        colors: ["Black", "Clear", "Blue", "Pink"],
+        description: "Shockproof phone case with screen protector"
+    },
+    {
+        id: 8,
+        name: "Gaming Headset",
+        price: 6999,
+        category: "headphones",
+        images: [
+            "https://picsum.photos/seed/headphones2/400/400",
+            "https://picsum.photos/seed/headphones2-2/400/400",
+            "https://picsum.photos/seed/headphones2-3/400/400"
+        ],
+        colors: ["Red", "Black", "Blue"],
+        description: "RGB gaming headset with microphone"
+    },
+    {
+        id: 9,
+        name: "Power Bank 20000mAh",
+        price: 4499,
+        category: "powerbanks",
+        images: [
+            "https://picsum.photos/seed/powerbank2/400/400",
+            "https://picsum.photos/seed/powerbank2-2/400/400",
+            "https://picsum.photos/seed/powerbank2-3/400/400"
+        ],
+        colors: ["Black", "White"],
+        description: "Ultra high-capacity power bank"
+    },
+    {
+        id: 10,
+        name: "Wireless Charger",
+        price: 1999,
+        category: "chargers",
+        images: [
+            "https://picsum.photos/seed/charger2/400/400",
+            "https://picsum.photos/seed/charger2-2/400/400"
+        ],
+        colors: ["Black", "White"],
+        description: "Fast wireless charging pad"
+    },
+    {
+        id: 11,
+        name: "Fitness Tracker",
+        price: 7999,
+        category: "smartwatches",
+        images: [
+            "https://picsum.photos/seed/watch2/400/400",
+            "https://picsum.photos/seed/watch2-2/400/400",
+            "https://picsum.photos/seed/watch2-3/400/400"
+        ],
+        colors: ["Black", "Pink", "Blue"],
+        description: "Lightweight fitness and activity tracker"
+    },
+    {
+        id: 12,
+        name: "Party Speaker 50W",
+        price: 12999,
+        category: "speakers",
+        images: [
+            "https://picsum.photos/seed/speaker2/400/400",
+            "https://picsum.photos/seed/speaker2-2/400/400",
+            "https://picsum.photos/seed/speaker2-3/400/400",
+            "https://picsum.photos/seed/speaker2-4/400/400"
+        ],
+        colors: ["Black", "Multi-color"],
+        description: "High-power party speaker with LED lights"
+    }
+];
 
-function showPage(id, e) {
-    document.querySelectorAll('.cat-page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.category-menu button').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    e.target.classList.add('active');
-}
-
-function openModal(name, price, type) {
-    currentItem = { name, price };
-    document.getElementById('modalItemName').innerText = name;
-    document.getElementById('modalColor').innerHTML = productColors[type].map(c => `<option value="${c}">${c}</option>`).join('');
-    document.getElementById('variationModal').style.display = 'flex';
-}
-
-function closeModal() { document.getElementById('variationModal').style.display = 'none'; }
-
-function confirmAddToCart() {
-    const qty = parseInt(document.getElementById('modalQty').value);
-    const clr = document.getElementById('modalColor').value;
-    cart.push({ name: currentItem.name, price: currentItem.price, qty, color: clr, total: currentItem.price * qty });
-    updateUI();
-    closeModal();
-}
-
-function updateUI() {
-    const box = document.getElementById('cartDisplay');
-    let total = 0;
-    if (cart.length === 0) { box.innerText = "Empty"; document.getElementById('totalPrice').innerText = "0"; return; }
-    box.innerHTML = cart.map((it, i) => {
-        total += it.total;
-        return `<div style="display:flex;justify-content:space-between;margin-bottom:8px">
-                <span>${it.qty}x ${it.name} (${it.color})</span>
-                <span onclick="remove(${i})" style="color:red;cursor:pointer">X</span></div>`;
-    }).join('');
-    document.getElementById('totalPrice').innerText = total;
-}
-
-function remove(i) {
-    cart.splice(i, 1);
-    updateUI();
-}
-
-function sendOrder() {
-    const n = document.getElementById('name').value;
-    const c = document.getElementById('city').value;
-    const a = document.getElementById('address').value;
-
-    const p1 = document.getElementById('phone1').value;
-    const p2 = document.getElementById('phone2').value;
-
-    if (!n || !p1 || cart.length === 0)
-        return alert("Fill Name, Phone and add items!");
-
-    const phoneText = p2 ? `${p1} / ${p2}` : p1;
-
-    let msg = `*NEW ORDER - S A K U R A  DECOR*\n\n👤 *Customer:* ${n}\n📞 *Phone:* ${phoneText}\n🏙️ *City:* ${c}\n📍 *Address:* ${a}\n\n*--- ITEMS ---*\n`;
-
-    cart.forEach(it =>
-        msg += `• ${it.qty}x ${it.name} (${it.color}) - LKR ${it.total}\n`
-    );
-
-    msg += `\n💰 *Total: LKR ${document.getElementById('totalPrice').innerText}*`;
-
-    window.open(`https://wa.me/94751302483?text=${encodeURIComponent(msg)}`, '_blank');
-}
-
-const sliders = document.querySelectorAll('.product-grid');
-
-sliders.forEach(slider => {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    slider.addEventListener('mousedown', (e) => {
-        isDown = true;
-        slider.classList.add('active');
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-        slider.style.cursor = 'grabbing';
-    });
-
-    slider.addEventListener('mouseleave', () => {
-        isDown = false;
-        slider.style.cursor = 'grab';
-    });
-
-    slider.addEventListener('mouseup', () => {
-        isDown = false;
-        slider.style.cursor = 'grab';
-    });
-
-    slider.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 2; // Adjust number to change scroll speed
-        slider.scrollLeft = scrollLeft - walk;
-    });
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    loadProducts();
+    loadCart();
+    setupEventListeners();
 });
 
-function showPage(pageId, event) {
-    // 1. Hide all categories and remove active class from buttons
-    const pages = document.querySelectorAll('.cat-page');
-    const buttons = document.querySelectorAll('.category-menu button');
-    
-    pages.forEach(page => {
-        page.classList.remove('active');
+// Load products from localStorage or use sample data
+function loadProducts() {
+    const storedProducts = localStorage.getItem('products');
+    if (storedProducts) {
+        products = JSON.parse(storedProducts);
         
-        // --- ADD THIS LINE BELOW ---
-        // This resets the horizontal scroll to the start for EVERY category
-        const grid = page.querySelector('.product-grid');
-        if (grid) grid.scrollLeft = 0; 
-    });
-
-    buttons.forEach(btn => btn.classList.remove('active'));
-
-    // 2. Show the selected category and set button to active
-    document.getElementById(pageId).classList.add('active');
-    event.currentTarget.classList.add('active');
-}
-if (grid) {
-    grid.scrollTo({ left: 0, behavior: 'smooth' });
-}
-
-
-
-
-
-
-
-function toggleCart() {
-    const overlay = document.getElementById('cartOverlay');
-    
-    // This toggles the 'active' class defined in CSS step 2
-    if (overlay.classList.contains('active')) {
-        overlay.classList.remove('active');
-        overlay.style.display = 'none'; // Fallback safety
+        // Migrate old products to new format
+        let needsUpdate = false;
+        products.forEach(product => {
+            if (product.image && !product.images) {
+                product.images = [product.image];
+                delete product.image;
+                needsUpdate = true;
+            }
+        });
+        
+        if (needsUpdate) {
+            localStorage.setItem('products', JSON.stringify(products));
+        }
     } else {
-        overlay.classList.add('active');
-        overlay.style.display = 'flex'; // Force flex to center items
+        products = sampleProducts;
+        localStorage.setItem('products', JSON.stringify(products));
+    }
+    displayProducts('all');
+}
+
+// Load cart from localStorage
+function loadCart() {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+        cart = JSON.parse(storedCart);
+        updateCartUI();
     }
 }
 
+// Setup event listeners
+function setupEventListeners() {
+    // Category buttons
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const category = this.dataset.category;
+            filterProducts(category);
+            
+            // Update active state
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
 
+    // Checkout form
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitOrder();
+    });
 
+    // Quantity input validation
+    document.getElementById('quantity').addEventListener('input', function() {
+        if (this.value < 1) this.value = 1;
+        if (this.value > 10) this.value = 10;
+        selectedQuantity = parseInt(this.value);
+    });
+    
+    // Modal overlay click to close
+    document.getElementById('productModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        const modal = document.getElementById('productModal');
+        if (modal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'ArrowLeft' && currentProduct && currentProduct.images.length > 1) {
+                prevImage();
+            } else if (e.key === 'ArrowRight' && currentProduct && currentProduct.images.length > 1) {
+                nextImage();
+            }
+        }
+    });
+}
 
+// Display products
+function displayProducts(category = 'all') {
+    const productsGrid = document.getElementById('productsGrid');
+    const filteredProducts = category === 'all' 
+        ? products 
+        : products.filter(p => p.category === category);
+    
+    productsGrid.innerHTML = '';
+    
+    filteredProducts.forEach((product, index) => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.style.animationDelay = `${index * 0.1}s`;
+        
+        productCard.innerHTML = `
+            <img src="${product.images[0]}" alt="${product.name}" class="product-image" onclick="openProductModal(${product.id})">
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <div class="product-price">Rs. ${product.price.toLocaleString()}</div>
+                <button class="view-add-btn" onclick="openProductModal(${product.id})">
+                    View / Add
+                </button>
+            </div>
+        `;
+        
+        productsGrid.appendChild(productCard);
+    });
+}
 
+// Filter products by category
+function filterProducts(category) {
+    displayProducts(category);
+}
 
+// Open product modal
+function openProductModal(productId) {
+    currentProduct = products.find(p => p.id === productId);
+    if (!currentProduct) return;
+    
+    // Reset selections
+    selectedColor = currentProduct.colors[0] || '';
+    selectedQuantity = 1;
+    currentImageIndex = 0;
+    document.getElementById('quantity').value = 1;
+    
+    // Update modal content
+    document.getElementById('modalTitle').textContent = currentProduct.name;
+    document.getElementById('modalPrice').textContent = `Rs. ${currentProduct.price.toLocaleString()}`;
+    
+    // Setup image gallery
+    setupImageGallery();
+    
+    // Update color options
+    const colorOptions = document.getElementById('colorOptions');
+    colorOptions.innerHTML = '';
+    currentProduct.colors.forEach(color => {
+        const colorBtn = document.createElement('button');
+        colorBtn.className = 'variation-option';
+        colorBtn.textContent = color;
+        colorBtn.onclick = () => selectColor(color);
+        if (color === selectedColor) {
+            colorBtn.classList.add('selected');
+        }
+        colorOptions.appendChild(colorBtn);
+    });
+    
+    // Show modal
+    document.getElementById('productModal').classList.add('active');
+    
+    // Setup touch events for swipe
+    setupTouchEvents();
+}
 
+// Select color variation
+function selectColor(color) {
+    selectedColor = color;
+    document.querySelectorAll('.variation-option').forEach(btn => {
+        btn.classList.remove('selected');
+        if (btn.textContent === color) {
+            btn.classList.add('selected');
+        }
+    });
+}
+
+// Setup image gallery
+function setupImageGallery() {
+    const gallerySlider = document.getElementById('gallerySlider');
+    const galleryIndicators = document.getElementById('galleryIndicators');
+    
+    // Clear existing content
+    gallerySlider.innerHTML = '';
+    galleryIndicators.innerHTML = '';
+    
+    // Create slides
+    currentProduct.images.forEach((image, index) => {
+        const slide = document.createElement('div');
+        slide.className = `gallery-slide ${index === 0 ? 'active' : ''}`;
+        slide.innerHTML = `<img src="${image}" alt="${currentProduct.name} - Image ${index + 1}">`;
+        gallerySlider.appendChild(slide);
+        
+        // Create indicator dot
+        const dot = document.createElement('button');
+        dot.className = `gallery-dot ${index === 0 ? 'active' : ''}`;
+        dot.onclick = () => goToImage(index);
+        galleryIndicators.appendChild(dot);
+    });
+    
+    // Show/hide navigation buttons based on image count
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    if (currentProduct.images.length <= 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        galleryIndicators.style.display = 'none';
+    } else {
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+        galleryIndicators.style.display = 'flex';
+    }
+}
+
+// Navigate to specific image
+function goToImage(index) {
+    const slides = document.querySelectorAll('.gallery-slide');
+    const dots = document.querySelectorAll('.gallery-dot');
+    
+    // Remove active classes
+    slides.forEach(slide => slide.classList.remove('active', 'prev'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Add active classes to new image
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    
+    // Set previous slide for transition effect
+    if (index > 0) {
+        slides[index - 1].classList.add('prev');
+    }
+    
+    currentImageIndex = index;
+}
+
+// Previous image
+function prevImage() {
+    const newIndex = currentImageIndex === 0 ? currentProduct.images.length - 1 : currentImageIndex - 1;
+    goToImage(newIndex);
+}
+
+// Next image
+function nextImage() {
+    const newIndex = currentImageIndex === currentProduct.images.length - 1 ? 0 : currentImageIndex + 1;
+    goToImage(newIndex);
+}
+
+// Setup touch events for swipe gestures
+function setupTouchEvents() {
+    const gallerySlider = document.getElementById('gallerySlider');
+    
+    gallerySlider.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    gallerySlider.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipeGesture();
+    }, { passive: true });
+}
+
+// Handle swipe gesture
+function handleSwipeGesture() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            // Swipe left - next image
+            nextImage();
+        } else {
+            // Swipe right - previous image
+            prevImage();
+        }
+    }
+}
+
+// Close modal
+function closeModal() {
+    document.getElementById('productModal').classList.remove('active');
+    currentProduct = null;
+    currentImageIndex = 0;
+}
+
+// Quantity controls
+function increaseQty() {
+    const qtyInput = document.getElementById('quantity');
+    if (qtyInput.value < 10) {
+        qtyInput.value = parseInt(qtyInput.value) + 1;
+        selectedQuantity = parseInt(qtyInput.value);
+    }
+}
+
+function decreaseQty() {
+    const qtyInput = document.getElementById('quantity');
+    if (qtyInput.value > 1) {
+        qtyInput.value = parseInt(qtyInput.value) - 1;
+        selectedQuantity = parseInt(qtyInput.value);
+    }
+}
+
+// Add to cart
+function addToCart() {
+    if (!currentProduct) return;
+    
+    const cartItem = {
+        id: currentProduct.id,
+        name: currentProduct.name,
+        price: currentProduct.price,
+        color: selectedColor,
+        quantity: selectedQuantity,
+        image: currentProduct.images[0]
+    };
+    
+    // Check if item already exists in cart
+    const existingItemIndex = cart.findIndex(item => 
+        item.id === cartItem.id && item.color === cartItem.color
+    );
+    
+    if (existingItemIndex !== -1) {
+        cart[existingItemIndex].quantity += cartItem.quantity;
+    } else {
+        cart.push(cartItem);
+    }
+    
+    // Save cart and update UI
+    saveCart();
+    updateCartUI();
+    closeModal();
+    
+    // Show success feedback
+    showNotification('Product added to cart!');
+}
+
+// Save cart to localStorage
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Update cart UI
+function updateCartUI() {
+    const cartItems = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    // Clear cart items
+    cartItems.innerHTML = '';
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p style="text-align: center; padding: 2rem; color: #666;">Your cart is empty</p>';
+        cartCount.textContent = '0';
+        cartTotal.textContent = 'Rs. 0';
+        return;
+    }
+    
+    let total = 0;
+    let itemCount = 0;
+    
+    cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        itemCount += item.quantity;
+        
+        const cartItemElement = document.createElement('div');
+        cartItemElement.className = 'cart-item';
+        cartItemElement.innerHTML = `
+            <div class="cart-item-header">
+                <div class="cart-item-name">${item.name}</div>
+                <button class="cart-item-remove" onclick="removeFromCart(${index})">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-item-details">
+                <div class="cart-item-variation">Color: ${item.color}</div>
+                <div class="cart-item-price">Rs. ${item.price.toLocaleString()}</div>
+            </div>
+            <div class="cart-item-quantity">
+                <button class="qty-btn" onclick="updateCartItemQuantity(${index}, -1)">-</button>
+                <span>${item.quantity}</span>
+                <button class="qty-btn" onclick="updateCartItemQuantity(${index}, 1)">+</button>
+            </div>
+            <div class="cart-item-total" style="text-align: right; margin-top: 0.5rem; font-weight: bold; color: var(--primary-green);">
+                Rs. ${itemTotal.toLocaleString()}
+            </div>
+        `;
+        cartItems.appendChild(cartItemElement);
+    });
+    
+    cartCount.textContent = itemCount;
+    cartTotal.textContent = `Rs. ${total.toLocaleString()}`;
+}
+
+// Update cart item quantity
+function updateCartItemQuantity(index, change) {
+    cart[index].quantity += change;
+    if (cart[index].quantity <= 0) {
+        removeFromCart(index);
+    } else {
+        saveCart();
+        updateCartUI();
+    }
+}
+
+// Remove from cart
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    saveCart();
+    updateCartUI();
+    showNotification('Item removed from cart');
+}
+
+// Toggle cart panel
+function toggleCart() {
+    const cartPanel = document.getElementById('cartPanel');
+    const cartOverlay = document.getElementById('cartOverlay');
+    
+    cartPanel.classList.toggle('active');
+    cartOverlay.classList.toggle('active');
+}
+
+// Submit order
+function submitOrder() {
+    if (cart.length === 0) {
+        showNotification('Your cart is empty!', 'error');
+        return;
+    }
+    
+    const firstName = document.getElementById('firstName').value.trim();
+    const phoneNumber = document.getElementById('phoneNumber').value.trim();
+    const secondPhone = document.getElementById('secondPhone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const city = document.getElementById('city').value.trim();
+    
+    // Basic validation
+    if (!firstName || !phoneNumber || !address || !city) {
+        showNotification('Please fill in all required fields', 'error');
+        return;
+    }
+    
+    // Format WhatsApp message
+    let message = 'New Order:\n\n';
+    message += `Name: ${firstName}\n`;
+    message += `Phone: ${phoneNumber}\n`;
+    if (secondPhone) message += `Second Phone: ${secondPhone}\n`;
+    message += `Address: ${address}, ${city}\n\n`;
+    message += 'Items:\n';
+    
+    let total = 0;
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        message += `- ${item.name} (${item.color}) x${item.quantity} - Rs. ${itemTotal.toLocaleString()}\n`;
+    });
+    
+    message += `\nTotal: Rs. ${total.toLocaleString()}`;
+    
+    // Open WhatsApp with pre-filled message
+    const whatsappNumber = '94771234567'; // Replace with your actual WhatsApp number
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+    
+    window.open(whatsappUrl, '_blank');
+    
+    // Clear cart after successful order
+    setTimeout(() => {
+        cart = [];
+        saveCart();
+        updateCartUI();
+        document.getElementById('checkoutForm').reset();
+        toggleCart();
+        showNotification('Order submitted successfully!', 'success');
+    }, 1000);
+}
+
+// Show notification
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? 'var(--primary-green)' : '#e74c3c'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        z-index: 3000;
+        animation: slideIn 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+// Scroll to footer
+function scrollToFooter() {
+    document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Add slideOut animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideOut {
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Admin panel functions (hidden feature)
+function checkAdminAccess() {
+    const password = prompt('Enter admin password:');
+    if (password === 'admin123') {
+        window.location.href = 'admin.html';
+    } else if (password) {
+        showNotification('Invalid password', 'error');
+    }
+}
+
+// Add admin access trigger (e.g., double-click on logo)
+document.addEventListener('DOMContentLoaded', function() {
+    const logo = document.querySelector('.nav-left i');
+    let clickCount = 0;
+    
+    logo.addEventListener('click', function() {
+        clickCount++;
+        if (clickCount >= 3) {
+            clickCount = 0;
+            checkAdminAccess();
+        }
+        
+        setTimeout(() => {
+            clickCount = 0;
+        }, 2000);
+    });
+});
