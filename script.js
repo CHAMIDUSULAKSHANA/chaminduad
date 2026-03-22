@@ -1,27 +1,241 @@
-// Firebase SDK
-// These should be loaded in HTML script tags, not here
+// E-Commerce JavaScript Functionality
+let products = [];
+let cart = [];
+let currentProduct = null;
+let selectedColor = '';
+let selectedQuantity = 1;
+let currentImageIndex = 0;
+let touchStartX = 0;
+let touchEndX = 0;
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyAlEc6hgWy-OZp73u4_lkwzAxrp_OSkgLI",
-    authDomain: "e-com-ef7f0.firebaseapp.com",
-    projectId: "e-com-ef7f0",
-    storageBucket: "e-com-ef7f0.firebasestorage.app",
-    messagingSenderId: "102811162785",
-    appId: "1:102811162785:web:7d016277dd7899cd6e38e0",
-    measurementId: "G-2BF78Z5LH3"
-};
+// Hide welcome screen
+function hideWelcomeScreen() {
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    welcomeScreen.classList.add('hidden');
+    setTimeout(() => {
+        welcomeScreen.style.display = 'none';
+    }, 500);
+}
 
-// Initialize Firebase (will be initialized after SDK loads)
-let db;
+// Auto-hide welcome screen after 3 seconds
+setTimeout(() => {
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    if (welcomeScreen && !welcomeScreen.classList.contains('hidden')) {
+        hideWelcomeScreen();
+    }
+}, 3000);
 
-// Initialize Firebase when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
+// Sample product data with multiple images
+const sampleProducts = [
+    {
+        id: 1,
+        name: "Wireless Headphones Pro",
+        price: 8999,
+        category: "headphones",
+        images: [
+            "https://picsum.photos/seed/headphones1/400/400",
+            "https://picsum.photos/seed/headphones1-2/400/400",
+            "https://picsum.photos/seed/headphones1-3/400/400",
+            "https://picsum.photos/seed/headphones1-4/400/400"
+        ],
+        colors: ["Black", "White", "Blue"],
+        description: "Premium wireless headphones with noise cancellation"
+    },
+    {
+        id: 2,
+        name: "Power Bank 10000mAh",
+        price: 2499,
+        category: "powerbanks",
+        images: [
+            "https://picsum.photos/seed/powerbank1/400/400",
+            "https://picsum.photos/seed/powerbank1-2/400/400",
+            "https://picsum.photos/seed/powerbank1-3/400/400"
+        ],
+        colors: ["Black", "White", "Red"],
+        description: "High-capacity portable power bank"
+    },
+    {
+        id: 3,
+        name: "Fast Charger 65W",
+        price: 3299,
+        category: "chargers",
+        images: [
+            "https://picsum.photos/seed/charger1/400/400",
+            "https://picsum.photos/seed/charger1-2/400/400",
+            "https://picsum.photos/seed/charger1-3/400/400"
+        ],
+        colors: ["Black", "White"],
+        description: "USB-C fast charger with multiple ports"
+    },
+    {
+        id: 4,
+        name: "Smart Watch Ultra",
+        price: 15999,
+        category: "smartwatches",
+        images: [
+            "https://picsum.photos/seed/watch1/400/400",
+            "https://picsum.photos/seed/watch1-2/400/400",
+            "https://picsum.photos/seed/watch1-3/400/400",
+            "https://picsum.photos/seed/watch1-4/400/400",
+            "https://picsum.photos/seed/watch1-5/400/400"
+        ],
+        colors: ["Black", "Silver", "Rose Gold"],
+        description: "Advanced fitness and health tracking smartwatch"
+    },
+    {
+        id: 5,
+        name: "Bluetooth Speaker Mini",
+        price: 4999,
+        category: "speakers",
+        images: [
+            "https://picsum.photos/seed/speaker1/400/400",
+            "https://picsum.photos/seed/speaker1-2/400/400",
+            "https://picsum.photos/seed/speaker1-3/400/400"
+        ],
+        colors: ["Black", "Blue", "Red", "Green"],
+        description: "Portable waterproof bluetooth speaker"
+    },
+    {
+        id: 6,
+        name: "USB-C Cable 2m",
+        price: 799,
+        category: "cables",
+        images: [
+            "https://picsum.photos/seed/cable1/400/400",
+            "https://picsum.photos/seed/cable1-2/400/400"
+        ],
+        colors: ["Black", "White", "Red"],
+        description: "Durable fast-charging USB-C cable"
+    },
+    {
+        id: 7,
+        name: "Phone Case Premium",
+        price: 1299,
+        category: "cases",
+        images: [
+            "https://picsum.photos/seed/case1/400/400",
+            "https://picsum.photos/seed/case1-2/400/400",
+            "https://picsum.photos/seed/case1-3/400/400",
+            "https://picsum.photos/seed/case1-4/400/400"
+        ],
+        colors: ["Black", "Clear", "Blue", "Pink"],
+        description: "Shockproof phone case with screen protector"
+    },
+    {
+        id: 8,
+        name: "Gaming Headset",
+        price: 6999,
+        category: "headphones",
+        images: [
+            "https://picsum.photos/seed/headphones2/400/400",
+            "https://picsum.photos/seed/headphones2-2/400/400",
+            "https://picsum.photos/seed/headphones2-3/400/400"
+        ],
+        colors: ["Red", "Black", "Blue"],
+        description: "RGB gaming headset with microphone"
+    },
+    {
+        id: 9,
+        name: "Power Bank 20000mAh",
+        price: 4499,
+        category: "powerbanks",
+        images: [
+            "https://picsum.photos/seed/powerbank2/400/400",
+            "https://picsum.photos/seed/powerbank2-2/400/400",
+            "https://picsum.photos/seed/powerbank2-3/400/400"
+        ],
+        colors: ["Black", "White"],
+        description: "Ultra high-capacity power bank"
+    },
+    {
+        id: 10,
+        name: "Wireless Charger",
+        price: 1999,
+        category: "chargers",
+        images: [
+            "https://picsum.photos/seed/charger2/400/400",
+            "https://picsum.photos/seed/charger2-2/400/400"
+        ],
+        colors: ["Black", "White"],
+        description: "Fast wireless charging pad"
+    },
+    {
+        id: 11,
+        name: "Fitness Tracker",
+        price: 7999,
+        category: "smartwatches",
+        images: [
+            "https://picsum.photos/seed/watch2/400/400",
+            "https://picsum.photos/seed/watch2-2/400/400",
+            "https://picsum.photos/seed/watch2-3/400/400"
+        ],
+        colors: ["Black", "Pink", "Blue"],
+        description: "Lightweight fitness and activity tracker"
+    },
+    {
+        id: 12,
+        name: "Party Speaker 50W",
+        price: 12999,
+        category: "speakers",
+        images: [
+            "https://picsum.photos/seed/speaker2/400/400",
+            "https://picsum.photos/seed/speaker2-2/400/400",
+            "https://picsum.photos/seed/speaker2-3/400/400",
+            "https://picsum.photos/seed/speaker2-4/400/400"
+        ],
+        colors: ["Black", "Multi-color"],
+        description: "High-power party speaker with LED lights"
+    }
+];
+
+// Load categories from localStorage and render them
+function loadAndRenderCategories() {
+    const storedCategories = localStorage.getItem('categories');
+    let categories = [];
     
-    // Continue with app initialization
+    if (storedCategories) {
+        categories = JSON.parse(storedCategories);
+    } else {
+        // Default categories
+        categories = [
+            { id: 'all', name: 'All' },
+            { id: 'headphones', name: 'Headphones' },
+            { id: 'powerbanks', name: 'Power Banks' },
+            { id: 'chargers', name: 'Chargers' },
+            { id: 'smartwatches', name: 'Smart Watches' },
+            { id: 'speakers', name: 'Speakers' },
+            { id: 'cables', name: 'Cables' },
+            { id: 'cases', name: 'Phone Cases' }
+        ];
+        localStorage.setItem('categories', JSON.stringify(categories));
+    }
+    
+    renderCategories(categories);
+}
+
+// Render categories in the category container
+function renderCategories(categories) {
+    const container = document.getElementById('categoryContainer');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    categories.forEach((category, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'category-btn' + (index === 0 ? ' active' : '');
+        btn.dataset.category = category.id;
+        btn.textContent = category.name;
+        btn.addEventListener('click', function() {
+            const cat = this.dataset.category;
+            filterProducts(cat);
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+        container.appendChild(btn);
+    });
+}
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
     loadAndRenderCategories();
     loadProducts();
     loadCart();
@@ -56,9 +270,11 @@ function loadProducts() {
 
 // Load cart from localStorage
 function loadCart() {
-    // Always start with empty cart on page load/refresh
-    cart = [];
-    updateCartUI();
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+        cart = JSON.parse(storedCart);
+        updateCartUI();
+    }
 }
 
 // Setup event listeners
