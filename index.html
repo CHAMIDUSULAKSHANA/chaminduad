@@ -3,17 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Shop - Online Electronics Store</title>
+    <title>Sakura Horizon - Online Electronics Store</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <div class="welcome-logo">
+                <img src="logo.png" alt="Sakura Horizon">
+            </div>
+            <h1 class="welcome-title">Sakura Horizon</h1>
+            <p class="welcome-subtitle">Your Premium Electronics Store</p>
+            <div class="welcome-loader">
+                <div class="loader-bar"></div>
+            </div>
+            <button class="welcome-btn" onclick="hideWelcomeScreen()">
+                Enter Shop <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-left">
-                <i class="fas fa-store"></i>
-                <span class="shop-name">Tech Shop</span>
+                <img src="logo.png" alt="Sakura Horizon" class="nav-logo">
+                <span class="shop-name">Sakura Horizon</span>
             </div>
             <div class="nav-right">
                 <button class="nav-btn contact-btn" onclick="scrollToFooter()">
@@ -29,6 +46,9 @@
 
     <!-- Category Slider -->
     <section class="category-section">
+        <div class="category-scroll-hint">
+            <i class="fas fa-chevron-left"></i>
+        </div>
         <div class="category-container" id="categoryContainer">
             <button class="category-btn active" data-category="all">All</button>
             <button class="category-btn" data-category="headphones">Headphones</button>
@@ -80,6 +100,9 @@
                         <div class="variation-options" id="colorOptions"></div>
                     </div>
                     
+                    <!-- Custom Variations Container -->
+                    <div id="customVariationsContainer"></div>
+                    
                     <div class="variation-section">
                         <label>Quantity:</label>
                         <div class="quantity-selector">
@@ -106,39 +129,41 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <div class="cart-items" id="cartItems">
-            <!-- Cart items will be dynamically loaded here -->
-        </div>
-        <div class="cart-summary">
-            <div class="cart-total">
-                <span>Total: </span>
-                <span id="cartTotal">Rs. 0</span>
+        <div class="cart-content">
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be dynamically loaded here -->
             </div>
-        </div>
-        
-        <!-- Order Form -->
-        <div class="order-form">
-            <h4>Delivery Details</h4>
-            <form id="checkoutForm">
-                <div class="form-group">
-                    <input type="text" id="firstName" placeholder="First Name" required>
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span>Total: </span>
+                    <span id="cartTotal">Rs. 0</span>
                 </div>
-                <div class="form-group">
-                    <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
-                </div>
-                <div class="form-group">
-                    <input type="tel" id="secondPhone" placeholder="Second Phone Number (Optional)">
-                </div>
-                <div class="form-group">
-                    <input type="text" id="address" placeholder="Address" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="city" placeholder="City" required>
-                </div>
-                <button type="submit" class="submit-order-btn">
-                    <i class="fab fa-whatsapp"></i> Submit Order
-                </button>
-            </form>
+            </div>
+            
+            <!-- Order Form -->
+            <div class="order-form">
+                <h4>Delivery Details</h4>
+                <form id="checkoutForm">
+                    <div class="form-group">
+                        <input type="text" id="firstName" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="secondPhone" placeholder="Second Phone Number (Optional)">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="address" placeholder="Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="city" placeholder="City" required>
+                    </div>
+                    <button type="submit" class="submit-order-btn">
+                        <i class="fab fa-whatsapp"></i> Submit Order
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -147,27 +172,28 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Contact Us</h4>
-                <p><i class="fas fa-phone"></i> +94 77 123 4567</p>
-                <p><i class="fab fa-whatsapp"></i> +94 77 123 4567</p>
-                <p><i class="fas fa-envelope"></i> info@techshop.lk</p>
+                <p><i class="fas fa-phone"></i> +94 75 130 2483</p>
+                <p><i class="fab fa-whatsapp"></i> +94 75 130 2483</p>
+                <p><i class="fas fa-envelope"></i> pererachamidusulakshana@gmail.com</p>
             </div>
             <div class="footer-section">
                 <h4>Store Hours</h4>
-                <p>Monday - Friday: 9AM - 6PM</p>
-                <p>Saturday: 9AM - 4PM</p>
+                <p>Monday - Friday: 7AM - 9PM</p>
+                <p>Saturday: 7AM - 5PM</p>
                 <p>Sunday: Closed</p>
             </div>
             <div class="footer-section">
                 <h4>Follow Us</h4>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.facebook.com/opsofiainfo/"><i class="fab fa-facebook"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://wa.link/fmlthb"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Tech Shop. All rights reserved.</p>
+            <p>&copy; 2026 Sakura Horizon. All rights reserved.</p>
+            <div><h4>CREATED BY CHAMINDU SULAKSHANA PERERA</h4></div>
         </div>
     </footer>
 

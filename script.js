@@ -8,6 +8,23 @@ let currentImageIndex = 0;
 let touchStartX = 0;
 let touchEndX = 0;
 
+// Hide welcome screen
+function hideWelcomeScreen() {
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    welcomeScreen.classList.add('hidden');
+    setTimeout(() => {
+        welcomeScreen.style.display = 'none';
+    }, 500);
+}
+
+// Auto-hide welcome screen after 3 seconds
+setTimeout(() => {
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    if (welcomeScreen && !welcomeScreen.classList.contains('hidden')) {
+        hideWelcomeScreen();
+    }
+}, 3000);
+
 // Sample product data with multiple images
 const sampleProducts = [
     {
@@ -171,8 +188,55 @@ const sampleProducts = [
     }
 ];
 
+// Load categories from localStorage and render them
+function loadAndRenderCategories() {
+    const storedCategories = localStorage.getItem('categories');
+    let categories = [];
+    
+    if (storedCategories) {
+        categories = JSON.parse(storedCategories);
+    } else {
+        // Default categories
+        categories = [
+            { id: 'all', name: 'All' },
+            { id: 'headphones', name: 'Headphones' },
+            { id: 'powerbanks', name: 'Power Banks' },
+            { id: 'chargers', name: 'Chargers' },
+            { id: 'smartwatches', name: 'Smart Watches' },
+            { id: 'speakers', name: 'Speakers' },
+            { id: 'cables', name: 'Cables' },
+            { id: 'cases', name: 'Phone Cases' }
+        ];
+        localStorage.setItem('categories', JSON.stringify(categories));
+    }
+    
+    renderCategories(categories);
+}
+
+// Render categories in the category container
+function renderCategories(categories) {
+    const container = document.getElementById('categoryContainer');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    categories.forEach((category, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'category-btn' + (index === 0 ? ' active' : '');
+        btn.dataset.category = category.id;
+        btn.textContent = category.name;
+        btn.addEventListener('click', function() {
+            const cat = this.dataset.category;
+            filterProducts(cat);
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+        container.appendChild(btn);
+    });
+}
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+    loadAndRenderCategories();
     loadProducts();
     loadCart();
     setupEventListeners();
@@ -226,6 +290,14 @@ function setupEventListeners() {
             this.classList.add('active');
         });
     });
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            searchProducts(this.value);
+        });
+    }
 
     // Checkout form
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
@@ -328,6 +400,33 @@ function openProductModal(productId) {
         colorOptions.appendChild(colorBtn);
     });
     
+    // Render custom variations if they exist
+    const customVariationsContainer = document.getElementById('customVariationsContainer');
+    customVariationsContainer.innerHTML = '';
+    if (currentProduct.variations && Object.keys(currentProduct.variations).length > 0) {
+        Object.entries(currentProduct.variations).forEach(([variationName, variationValues]) => {
+            const variationSection = document.createElement('div');
+            variationSection.className = 'variation-section';
+            variationSection.innerHTML = `
+                <label>${variationName}:</label>
+                <div class="variation-options" id="variation-${variationName}"></div>
+            `;
+            customVariationsContainer.appendChild(variationSection);
+            
+            const variationOptions = variationSection.querySelector('.variation-options');
+            variationValues.forEach((value, index) => {
+                const valueBtn = document.createElement('button');
+                valueBtn.className = 'variation-option';
+                valueBtn.textContent = value;
+                valueBtn.onclick = () => selectVariation(variationName, value, valueBtn);
+                if (index === 0) {
+                    valueBtn.classList.add('selected');
+                }
+                variationOptions.appendChild(valueBtn);
+            });
+        });
+    }
+    
     // Show modal
     document.getElementById('productModal').classList.add('active');
     
@@ -338,12 +437,25 @@ function openProductModal(productId) {
 // Select color variation
 function selectColor(color) {
     selectedColor = color;
-    document.querySelectorAll('.variation-option').forEach(btn => {
+    document.querySelectorAll('#colorOptions .variation-option').forEach(btn => {
         btn.classList.remove('selected');
         if (btn.textContent === color) {
             btn.classList.add('selected');
         }
     });
+}
+
+// Select custom variation
+function selectVariation(variationName, value, btnElement) {
+    // Remove selected class from all options in the same variation group
+    const variationContainer = document.getElementById(`variation-${variationName}`);
+    if (variationContainer) {
+        variationContainer.querySelectorAll('.variation-option').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+    }
+    // Add selected class to clicked button
+    btnElement.classList.add('selected');
 }
 
 // Setup image gallery
@@ -627,7 +739,7 @@ function submitOrder() {
     message += `\nTotal: Rs. ${total.toLocaleString()}`;
     
     // Open WhatsApp with pre-filled message
-    const whatsappNumber = '94771234567'; // Replace with your actual WhatsApp number
+    const whatsappNumber = '94751302483'; // Replace with your actual WhatsApp number
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
     
@@ -659,22 +771,22 @@ function showNotification(message, type = 'success') {
         border-radius: 8px;
         box-shadow: var(--shadow);
         z-index: 3000;
-        animation: slideIn 0.3s ease;
+        animation: slideIn 0.50s ease;
     `;
     
     document.body.appendChild(notification);
     
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
+        notification.style.animation = 'slideOut 0.50s ease';
         setTimeout(() => {
             document.body.removeChild(notification);
-        }, 300);
+        }, 500);
     }, 3000);
 }
 
 // Scroll to footer
 function scrollToFooter() {
-    document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("footer").scrollIntoView({ behavior: 'smooth' });
 }
 
 // Add slideOut animation

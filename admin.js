@@ -1,14 +1,211 @@
 // Admin Panel JavaScript
 let products = [];
+let categories = [];
 let editingProductId = null;
 let deleteProductId = null;
+let editingCategoryId = null;
+
+// Admin credentials (in production, this should be stored securely on server)
+const ADMIN_USERNAME = 'sofia';
+const ADMIN_PASSWORD = '@Snoopy2006';
 
 // Initialize admin panel
 document.addEventListener('DOMContentLoaded', function() {
+    checkAuth();
+});
+
+// Check if user is authenticated
+function checkAuth() {
+    const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+    if (isLoggedIn === 'true') {
+        showAdminContent();
+    } else {
+        showLoginScreen();
+    }
+}
+
+// Show login screen
+function showLoginScreen() {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('adminContent').style.display = 'none';
+}
+
+// Show admin content
+function showAdminContent() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
     loadProducts();
+    loadCategories();
     updateStats();
     setupEventListeners();
-});
+}
+
+// Handle login form submission
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const errorElement = document.getElementById('loginError');
+    
+    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        errorElement.classList.remove('show');
+        document.getElementById('loginForm').reset();
+        showAdminContent();
+    } else {
+        errorElement.textContent = 'Invalid username or password';
+        errorElement.classList.add('show');
+    }
+}
+
+// Logout function
+function logout() {
+    sessionStorage.removeItem('adminLoggedIn');
+    showLoginScreen();
+}
+
+// Category Management Functions
+function loadCategories() {
+    const storedCategories = localStorage.getItem('categories');
+    if (storedCategories) {
+        categories = JSON.parse(storedCategories);
+    } else {
+        // Default categories
+        categories = [
+            { id: 'all', name: 'All Products' },
+            { id: 'smartphones', name: 'Smartphones' },
+            { id: 'laptops', name: 'Laptops' },
+            { id: 'headphones', name: 'Headphones' },
+            { id: 'smartwatches', name: 'Smart Watches' },
+            { id: 'cameras', name: 'Cameras' },
+            { id: 'gaming', name: 'Gaming' },
+            { id: 'accessories', name: 'Accessories' }
+        ];
+        localStorage.setItem('categories', JSON.stringify(categories));
+    }
+    displayCategories();
+    updateCategorySelect();
+}
+
+function displayCategories() {
+    const container = document.getElementById('categoriesList');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    categories.forEach(category => {
+        const categoryCard = document.createElement('div');
+        categoryCard.className = 'category-card';
+        categoryCard.innerHTML = `
+            <div class="category-info">
+                <h4>${category.name}</h4>
+                <span class="category-id">ID: ${category.id}</span>
+            </div>
+            <div class="category-actions">
+                <button class="action-btn edit" onclick="editCategory('${category.id}')" title="Edit">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="action-btn delete" onclick="deleteCategory('${category.id}')" title="Delete" ${category.id === 'all' ? 'disabled' : ''}>
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+        container.appendChild(categoryCard);
+    });
+}
+
+function updateCategorySelect() {
+    const select = document.getElementById('productCategory');
+    if (!select) return;
+    
+    select.innerHTML = '';
+    categories.forEach(category => {
+        if (category.id !== 'all') {
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.textContent = category.name;
+            select.appendChild(option);
+        }
+    });
+}
+
+function openAddCategoryModal() {
+    editingCategoryId = null;
+    document.getElementById('categoryModalTitle').textContent = 'Add Category';
+    document.getElementById('categoryForm').reset();
+    document.getElementById('editingCategoryId').value = '';
+    document.getElementById('categoryModal').classList.add('active');
+}
+
+function closeCategoryModal() {
+    document.getElementById('categoryModal').classList.remove('active');
+}
+
+function editCategory(categoryId) {
+    const category = categories.find(c => c.id === categoryId);
+    if (!category) return;
+    
+    editingCategoryId = categoryId;
+    document.getElementById('categoryModalTitle').textContent = 'Edit Category';
+    document.getElementById('categoryName').value = category.name;
+    document.getElementById('categoryId').value = category.id;
+    document.getElementById('editingCategoryId').value = categoryId;
+    document.getElementById('categoryModal').classList.add('active');
+}
+
+function saveCategory() {
+    const name = document.getElementById('categoryName').value.trim();
+    const id = document.getElementById('categoryId').value.trim().toLowerCase().replace(/\s+/g, '-');
+    
+    if (!name || !id) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
+    if (editingCategoryId) {
+        // Update existing category
+        const index = categories.findIndex(c => c.id === editingCategoryId);
+        if (index !== -1) {
+            // Update products with old category ID
+            products.forEach(product => {
+                if (product.category === editingCategoryId) {
+                    product.category = id;
+                }
+            });
+            categories[index] = { id, name };
+        }
+    } else {
+        // Add new category
+        if (categories.some(c => c.id === id)) {
+            alert('Category ID already exists');
+            return;
+        }
+        categories.push({ id, name });
+    }
+    
+    localStorage.setItem('categories', JSON.stringify(categories));
+    localStorage.setItem('products', JSON.stringify(products));
+    
+    closeCategoryModal();
+    displayCategories();
+    updateCategorySelect();
+    updateStats();
+}
+
+function deleteCategory(categoryId) {
+    if (categoryId === 'all') return;
+    
+    if (!confirm('Are you sure you want to delete this category? Products in this category will need to be reassigned.')) {
+        return;
+    }
+    
+    categories = categories.filter(c => c.id !== categoryId);
+    localStorage.setItem('categories', JSON.stringify(categories));
+    
+    displayCategories();
+    updateCategorySelect();
+    updateStats();
+}
 
 // Load products from localStorage
 function loadProducts() {
@@ -308,6 +505,13 @@ function editProduct(productId) {
         loadImagesForEditing(product.images);
     }
     
+    // Load variations if they exist
+    if (product.variations) {
+        loadVariationsIntoForm(product.variations);
+    } else {
+        clearVariationsForm();
+    }
+    
     document.getElementById('productModal').classList.add('active');
 }
 
@@ -317,6 +521,7 @@ function closeProductModal() {
     editingProductId = null;
     document.getElementById('productForm').reset();
     resetImageUpload();
+    clearVariationsForm();
 }
 
 // Save product
@@ -344,6 +549,12 @@ function saveProduct(event) {
     // Validate colors
     if (formData.colors.length === 0) {
         formData.colors = ['Black']; // Default color
+    }
+    
+    // Get custom variations
+    const variations = getVariationsFromForm();
+    if (Object.keys(variations).length > 0) {
+        formData.variations = variations;
     }
     
     if (editingProductId) {
@@ -766,4 +977,51 @@ function loadImagesForEditing(images) {
         isPrimary: index === 0
     }));
     renderImagePreviews();
+}
+
+// Custom Variations Functions
+function addVariationField(name = '', values = '') {
+    const container = document.getElementById('variationsContainer');
+    const variationRow = document.createElement('div');
+    variationRow.className = 'variation-row';
+    variationRow.innerHTML = `
+        <input type="text" class="variation-name" placeholder="Size" value="${name}" required>
+        <input type="text" class="variation-values" placeholder="Small, Medium, Large" value="${values}" required>
+        <button type="button" class="btn-remove-variation" onclick="removeVariationField(this)" title="Remove">
+            <i class="fas fa-trash"></i>
+        </button>
+    `;
+    container.appendChild(variationRow);
+}
+
+function removeVariationField(button) {
+    const row = button.closest('.variation-row');
+    row.remove();
+}
+
+function getVariationsFromForm() {
+    const variations = {};
+    const rows = document.querySelectorAll('.variation-row');
+    rows.forEach(row => {
+        const name = row.querySelector('.variation-name').value.trim();
+        const values = row.querySelector('.variation-values').value.trim();
+        if (name && values) {
+            variations[name] = values.split(',').map(v => v.trim()).filter(v => v);
+        }
+    });
+    return variations;
+}
+
+function loadVariationsIntoForm(variations) {
+    const container = document.getElementById('variationsContainer');
+    container.innerHTML = '';
+    if (variations && Object.keys(variations).length > 0) {
+        Object.entries(variations).forEach(([name, values]) => {
+            addVariationField(name, values.join(', '));
+        });
+    }
+}
+
+function clearVariationsForm() {
+    document.getElementById('variationsContainer').innerHTML = '';
 }
