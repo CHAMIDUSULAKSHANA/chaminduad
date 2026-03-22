@@ -33,7 +33,7 @@ const sampleProducts = [
         price: 8999,
         category: "headphones",
         images: [
-            "https://picsum.photos/seed/headphones1/400/400",
+            "https://jblstore.com.ph/cdn/shop/products/TUNE510_White_2000x.jpg?v=1757250701",
             "https://picsum.photos/seed/headphones1-2/400/400",
             "https://picsum.photos/seed/headphones1-3/400/400",
             "https://picsum.photos/seed/headphones1-4/400/400"
