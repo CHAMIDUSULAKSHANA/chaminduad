@@ -270,11 +270,9 @@ function loadProducts() {
 
 // Load cart from localStorage
 function loadCart() {
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-        cart = JSON.parse(storedCart);
-        updateCartUI();
-    }
+    // Always start with empty cart on page load/refresh
+    cart = [];
+    updateCartUI();
 }
 
 // Setup event listeners
@@ -739,7 +737,7 @@ function submitOrder() {
     message += `\nTotal: Rs. ${total.toLocaleString()}`;
     
     // Open WhatsApp with pre-filled message
-    const whatsappNumber = '94751302483'; // Replace with your actual WhatsApp number
+    const whatsappNumber = '94771234567'; // Replace with your actual WhatsApp number
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
     
