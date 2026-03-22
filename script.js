@@ -34,9 +34,9 @@ const sampleProducts = [
         category: "headphones",
         images: [
             "https://jblstore.com.ph/cdn/shop/products/TUNE510_White_2000x.jpg?v=1757250701",
-            "https://picsum.photos/seed/headphones1-2/400/400",
-            "https://picsum.photos/seed/headphones1-3/400/400",
-            "https://picsum.photos/seed/headphones1-4/400/400"
+            "https://jblstore.com.ph/cdn/shop/products/TUNE510_White_2000x.jpg?v=1757250701",
+            "https://jblstore.com.ph/cdn/shop/products/TUNE510_White_2000x.jpg?v=1757250701",
+            "https://jblstore.com.ph/cdn/shop/products/TUNE510_White_2000x.jpg?v=1757250701"
         ],
         colors: ["Black", "White", "Blue"],
         description: "Premium wireless headphones with noise cancellation"
