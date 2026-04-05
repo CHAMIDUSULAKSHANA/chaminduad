@@ -262,14 +262,15 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+    overflow-x: hidden;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
     background: var(--gray-100);
+    overflow-x: hidden;
     color: var(--gray-900);
     line-height: 1.6;
-    overflow-x: hidden;
 }
 
 a {
@@ -493,7 +494,7 @@ html::-webkit-scrollbar {
     outline: none;
     background: transparent;
     font-family: inherit;
-    font-size: 0.9rem;
+    font-size: 16px;
     width: 100%;
     color: var(--gray-900);
 }
