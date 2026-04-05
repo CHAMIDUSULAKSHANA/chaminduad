@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dula Cake Creations — Order Custom Cakes via WhatsApp</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<script>window.scrollTo(0,0);if('scrollRestoration' in history) history.scrollRestoration='manual';</script>
+
+    <!-- ======== SPLASH SCREEN ======== -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <!-- Animated Cake Building -->
+            <div class="splash-cake">
+                <div class="sc-candles">
+                    <div class="sc-candle"><div class="sc-flame"></div></div>
+                    <div class="sc-candle"><div class="sc-flame"></div></div>
+                    <div class="sc-candle"><div class="sc-flame"></div></div>
+                </div>
+                <div class="sc-layer sc-top">
+                    <div class="sc-drip sc-drip-1"></div>
+                    <div class="sc-drip sc-drip-2"></div>
+                    <div class="sc-drip sc-drip-3"></div>
+                </div>
+                <div class="sc-layer sc-mid"></div>
+                <div class="sc-layer sc-bottom"></div>
+                <div class="sc-plate"></div>
+            </div>
+            <!-- Shop Name Reveal -->
+            <h1 class="splash-title">DULA <span>CAKE CREATIONS</span></h1>
+            <div class="splash-loader">
+                <div class="splash-loader-bar"></div>
+            </div>
+            <p class="splash-tagline">Baking something sweet for you...</p>
+        </div>
+    </div>
+
+    <!-- ======== NAVBAR ======== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo-wrapper" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                    <img src="logo.svg" alt="Dula Cake Creations" class="logo-img">
+                    <span class="brand-name">Dula <span class="brand-highlight">Cakes</span></span>
+                </div>
+            </div>
+            <div class="nav-center">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search cakes..." oninput="filterProducts()">
+                </div>
+            </div>
+            <div class="nav-right">
+                <a href="#products" class="nav-icon" title="Our Cakes"><i class="fas fa-birthday-cake"></i></a>
+                <a href="#contact" class="nav-icon" title="Contact Us"><i class="fas fa-envelope"></i></a>
+                <a href="https://wa.me/94784562851?text=Hi%20Dula%20Cake%20Creations!%20%F0%9F%8E%82%20I%27d%20like%20to%20inquire%20about%20your%20cakes." target="_blank" class="nav-icon whatsapp-icon" title="WhatsApp Us"><i class="fab fa-whatsapp"></i></a>
+                <button class="nav-icon cart-btn" id="cartBtn" onclick="openCart()" title="Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="search-bar mobile-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search cakes..." oninput="filterProducts(this.value)">
+            </div>
+            <a href="#products" onclick="toggleMobileMenu()"><i class="fas fa-birthday-cake"></i> Our Cakes</a>
+            <a href="#contact" onclick="toggleMobileMenu()"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="https://wa.me/94784562851?text=Hi%20Dula%20Cake%20Creations!%20%F0%9F%8E%82%20I%27d%20like%20to%20inquire%20about%20your%20cakes." target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+            <button onclick="openCart(); toggleMobileMenu()"><i class="fas fa-shopping-cart"></i> Cart (<span class="mobile-cart-count">0</span>)</button>
+        </div>
+    </nav>
+
+    <!-- ======== HERO SECTION ======== -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title animate-fade-up">Welcome to <span>Dula Cake Creations</span></h1>
+            <p class="hero-subtitle animate-fade-up delay-1">Custom cakes baked with love — order directly through WhatsApp!</p>
+            <a href="#products" class="hero-btn animate-fade-up delay-2">
+                <i class="fas fa-birthday-cake"></i> Order Now
+            </a>
+        </div>
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </section>
+
+    <!-- ======== FEATURES BAR ======== -->
+    <section class="features-bar">
+        <div class="feature-item animate-on-scroll">
+            <i class="fab fa-whatsapp"></i>
+            <div>
+                <h4>Order via WhatsApp</h4>
+                <p>Quick & easy cake ordering</p>
+            </div>
+        </div>
+        <div class="feature-item animate-on-scroll">
+            <i class="fas fa-truck"></i>
+            <div>
+                <h4>Fresh Delivery</h4>
+                <p>Delivered fresh to your door</p>
+            </div>
+        </div>
+        <div class="feature-item animate-on-scroll">
+            <i class="fas fa-paint-brush"></i>
+            <div>
+                <h4>Custom Designs</h4>
+                <p>Your dream cake, our craft</p>
+            </div>
+        </div>
+        <div class="feature-item animate-on-scroll">
+            <i class="fas fa-heart"></i>
+            <div>
+                <h4>Baked with Love</h4>
+                <p>100% fresh ingredients</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== PRODUCTS SECTION ======== -->
+    <section class="products-section" id="products">
+        <div class="section-header animate-on-scroll">
+            <h2>Our Cakes</h2>
+            <p>Browse our delicious collection and order via WhatsApp</p>
+        </div>
+        <!-- Category Filter -->
+        <div class="category-filter animate-on-scroll">
+            <button class="cat-btn active" onclick="filterByCategory('all', this)">All</button>
+            <button class="cat-btn" onclick="filterByCategory('birthday', this)">Birthday Cakes</button>
+            <button class="cat-btn" onclick="filterByCategory('wedding', this)">Wedding Cakes</button>
+            <button class="cat-btn" onclick="filterByCategory('cupcakes', this)">Cupcakes</button>
+            <button class="cat-btn" onclick="filterByCategory('custom', this)">Custom Cakes</button>
+        </div>
+        <!-- Product Grid -->
+        <div class="product-grid" id="productGrid">
+            <!-- Products injected via JS -->
+        </div>
+    </section>
+
+    <!-- ======== PRODUCT MODAL (Detail View) ======== -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeProductModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="main-image-wrapper">
+                        <img src="" alt="" id="modalMainImage" class="modal-main-img">
+                        <button class="gallery-nav prev" onclick="prevImage()"><i class="fas fa-chevron-left"></i></button>
+                        <button class="gallery-nav next" onclick="nextImage()"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="thumbnail-strip" id="thumbnailStrip">
+                        <!-- Thumbnails injected via JS -->
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <span class="modal-category" id="modalCategory"></span>
+                    <h2 id="modalTitle"></h2>
+                    <div class="modal-rating" id="modalRating"></div>
+                    <p class="modal-price" id="modalPrice"></p>
+                    <p class="modal-old-price" id="modalOldPrice"></p>
+                    <p class="modal-desc" id="modalDesc"></p>
+                    <div class="modal-features" id="modalFeatures"></div>
+                    <div class="modal-qty">
+                        <label>Quantity:</label>
+                        <div class="qty-control">
+                            <button onclick="changeModalQty(-1)">−</button>
+                            <span id="modalQty">1</span>
+                            <button onclick="changeModalQty(1)">+</button>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-add-cart" onclick="addToCartFromModal()">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
+                        <button class="btn-buy-now" onclick="buyNowFromModal()">
+                            <i class="fab fa-whatsapp"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== CART SIDEBAR ======== -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+            <button onclick="closeCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty" id="cartEmpty">
+                <i class="fas fa-shopping-basket"></i>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="btn-checkout" onclick="openCheckoutForm()">
+                <i class="fab fa-whatsapp"></i> Checkout via WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- ======== CHECKOUT / ORDER FORM MODAL ======== -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-content checkout-modal-content">
+            <button class="modal-close" onclick="closeCheckoutModal()"><i class="fas fa-times"></i></button>
+            <div class="checkout-body">
+                <div class="checkout-header">
+                    <i class="fab fa-whatsapp"></i>
+                    <h2>Complete Your Order</h2>
+                    <p>Fill in your details and send the order via WhatsApp</p>
+                </div>
+                <form id="orderForm" onsubmit="sendWhatsAppOrder(event)">
+                    <div class="form-group">
+                        <label for="custName"><i class="fas fa-user"></i> Full Name *</label>
+                        <input type="text" id="custName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="custCity"><i class="fas fa-city"></i> City *</label>
+                        <input type="text" id="custCity" placeholder="Enter your city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="custAddress"><i class="fas fa-map-marker-alt"></i> Delivery Address *</label>
+                        <textarea id="custAddress" rows="2" placeholder="Enter your full address" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="custPhone1"><i class="fas fa-phone"></i> Phone Number 1 *</label>
+                            <input type="tel" id="custPhone1" placeholder="07XXXXXXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="custPhone2"><i class="fas fa-phone"></i> Phone Number 2 <small>(optional)</small></label>
+                            <input type="tel" id="custPhone2" placeholder="07XXXXXXXX">
+                        </div>
+                    </div>
+                    <div class="order-summary" id="orderSummary">
+                        <!-- Injected via JS -->
+                    </div>
+                    <button type="submit" class="btn-send-whatsapp">
+                        <i class="fab fa-whatsapp"></i> Send Order on WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== CONTACT / FOOTER SECTION ======== -->
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <div class="contact-info animate-on-scroll">
+                <h2>Get in Touch</h2>
+                <p>Have a special cake in mind? Let's talk!</p>
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        <h4>WhatsApp</h4>
+                        <a href="https://wa.me/94784562851?text=Hi%20Dula%20Cake%20Creations!%20%F0%9F%8E%82%20I%27d%20like%20to%20inquire%20about%20your%20cakes.">+94 78 456 2851</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <h4>Phone</h4>
+                        <a href="tel:+94784562851">+94 78 456 2851</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <a href="mailto:info@shopwa.com">info@shopwa.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>Address</h4>
+                        <p>Anuradhapura Town, Sri Lanka</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-map animate-on-scroll">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p>Visit Our Bakery</p>
+                    <a href="https://wa.me/94784562851?text=Hi%20Dula%20Cake%20Creations!%20%F0%9F%8E%82%20I%27d%20like%20to%20inquire%20about%20your%20cakes." class="btn-whatsapp-contact">
+                        <i class="fab fa-whatsapp"></i> Chat with Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== FOOTER ======== -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="logo.svg" alt="Dula Cake Creations">
+                    <span>Dula <span>Cakes</span></span>
+                </div>
+                <p>Freshly baked custom cakes for every occasion. Order easily through WhatsApp.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://wa.me/94784562851?text=Hi%20Dula%20Cake%20Creations!%20%F0%9F%8E%82%20I%27d%20like%20to%20inquire%20about%20your%20cakes." target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="#products">Our Cakes</a>
+                <a href="#contact">Contact Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <a href="#" onclick="filterByCategory('birthday')">Birthday Cakes</a>
+                <a href="#" onclick="filterByCategory('wedding')">Wedding Cakes</a>
+                <a href="#" onclick="filterByCategory('cupcakes')">Cupcakes</a>
+                <a href="#" onclick="filterByCategory('custom')">Custom Cakes</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> Anuradhapura Town</p>
+                    <p><i class="fas fa-phone-alt"></i> +94 78 456 2851</p>
+                    <p><i class="fas fa-envelope"></i> info@shopwa.com</p>
+                    <p><i class="fab fa-whatsapp"></i> +94 78 456 2851</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dula Cake Creations. All Rights Reserved. | Baked with <i class="fas fa-heart" style="color:#e74c3c"></i></p>
+            <p style="margin-top:8px; font-size:0.8rem; color:#FF6B9D;">Designed &amp; Developed with <i class="fas fa-heart" style="color:#FF6B9D"></i> by Chamindu Sulakshana</p>
+        </div>
+    </footer>
+
+    <!-- ======== FLOATING WHATSAPP BUTTON ======== -->
+    <a href="https://wa.me/94784562851?text=Hi%20Dula%20Cake%20Creations!%20%F0%9F%8E%82%20I%27d%20like%20to%20inquire%20about%20your%20cakes." target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ======== BACK TO TOP ======== -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ======== TOAST NOTIFICATION ======== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg">Added to cart!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

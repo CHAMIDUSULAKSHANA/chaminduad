@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF2D78;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cake" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFE0EC;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="icing" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFB3D0" />
+      <stop offset="100%" style="stop-color:#FF6B9D" />
+    </linearGradient>
+  </defs>
+  <!-- Circle Background -->
+  <circle cx="100" cy="100" r="100" fill="url(#bg)"/>
+  <!-- Cake Base (bottom tier) -->
+  <rect x="48" y="110" width="104" height="40" rx="8" fill="url(#cake)" opacity="0.95"/>
+  <!-- Cake Middle tier -->
+  <rect x="60" y="78" width="80" height="36" rx="6" fill="url(#cake)" opacity="0.95"/>
+  <!-- Icing drip bottom -->
+  <path d="M48 114 Q58 124 68 114 Q78 104 88 114 Q98 124 108 114 Q118 104 128 114 Q138 124 148 114 L152 114 L152 118 L48 118 Z" fill="url(#icing)" opacity="0.9"/>
+  <!-- Icing drip middle -->
+  <path d="M60 82 Q68 90 76 82 Q84 74 92 82 Q100 90 108 82 Q116 74 124 82 Q132 90 140 82 L140 86 L60 86 Z" fill="url(#icing)" opacity="0.9"/>
+  <!-- Cake Top tier -->
+  <rect x="76" y="52" width="48" height="30" rx="5" fill="url(#cake)" opacity="0.95"/>
+  <!-- Icing drip top -->
+  <path d="M76 56 Q84 63 92 56 Q100 49 108 56 Q116 63 124 56 L124 60 L76 60 Z" fill="url(#icing)" opacity="0.9"/>
+  <!-- Candle 1 -->
+  <rect x="88" y="32" width="5" height="22" rx="2" fill="#FFE0EC"/>
+  <!-- Candle 2 -->
+  <rect x="98" y="28" width="5" height="26" rx="2" fill="#FFE0EC"/>
+  <!-- Candle 3 -->
+  <rect x="108" y="34" width="5" height="20" rx="2" fill="#FFE0EC"/>
+  <!-- Flame 1 -->
+  <ellipse cx="90.5" cy="29" rx="3.5" ry="5" fill="#FFD700" opacity="0.9"/>
+  <ellipse cx="90.5" cy="29" rx="2" ry="3.5" fill="#FFF8DC"/>
+  <!-- Flame 2 -->
+  <ellipse cx="100.5" cy="25" rx="3.5" ry="5" fill="#FFD700" opacity="0.9"/>
+  <ellipse cx="100.5" cy="25" rx="2" ry="3.5" fill="#FFF8DC"/>
+  <!-- Flame 3 -->
+  <ellipse cx="110.5" cy="31" rx="3.5" ry="5" fill="#FFD700" opacity="0.9"/>
+  <ellipse cx="110.5" cy="31" rx="2" ry="3.5" fill="#FFF8DC"/>
+  <!-- Plate / base line -->
+  <ellipse cx="100" cy="152" rx="58" ry="6" fill="rgba(255,255,255,0.3)"/>
+  <!-- Text "DC" -->
+  <text x="100" y="170" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-size="18" font-weight="700" fill="rgba(255,255,255,0.9)" letter-spacing="2">DULA</text>
+</svg>
