@@ -232,10 +232,10 @@ const products = [
         description: "A beautifully handcrafted custom cake adorned with delicate buttercream flowers in pastel tones. Perfect for birthdays, bridal showers, and celebrations.",
         features: ["Buttercream Flowers", "Custom Colours", "Serves 12-15", "Personalised Message"],
         images: [
-            "New folder/4.jpg",
-            "New folder/5.jpg",
-            "New folder/6.jpg",
-            "New folder/7.jpg"
+            "4.jpg",
+            "5.jpg",
+            "6.jpg",
+            "7.jpg"
         ]
     },
     {
@@ -250,10 +250,10 @@ const products = [
         description: "An indulgent custom chocolate cake with rich ganache drip, topped with chocolate shards, truffles, and gold leaf accents. A true showstopper.",
         features: ["Chocolate Ganache Drip", "Gold Leaf", "Serves 14-16", "Gift Ready"],
         images: [
-            "New folder/8.jpg",
-            "New folder/9.jpg",
-            "New folder/10.jpg",
-            "New folder/11.jpg"
+            "8.jpg",
+            "9.jpg",
+            "10.jpg",
+            "11.jpg"
         ]
     },
     {
@@ -268,10 +268,10 @@ const products = [
         description: "Premium designer cake covered in smooth fondant with intricate hand-painted details and sugar art decorations. Tailored to your vision.",
         features: ["Fondant Finish", "Hand-Painted", "Sugar Art", "Serves 15-20"],
         images: [
-            "New folder/12.jpg",
-            "New folder/13.jpg",
-            "New folder/14.jpg",
-            "New folder/15.jpg"
+            "12.jpg",
+            "13.jpg",
+            "14.jpg",
+            "15.jpg"
         ]
     },
     {
@@ -286,10 +286,10 @@ const products = [
         description: "A stunning custom cake topped with an abundance of fresh seasonal fruits, light cream frosting, and a hint of citrus glaze. Fresh and delightful!",
         features: ["Fresh Fruits", "Light Cream", "Citrus Glaze", "Serves 10-12"],
         images: [
-            "New folder/16.jpg",
-            "New folder/17.jpg",
-            "New folder/18.jpg",
-            "New folder/19.jpg"
+            "16.jpg",
+            "17.jpg",
+            "18.jpg",
+            "19.jpg"
         ]
     }
 ];
